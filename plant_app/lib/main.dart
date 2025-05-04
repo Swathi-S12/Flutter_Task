@@ -3,6 +3,7 @@ import 'plant.dart';
 import 'api_service.dart';
 import 'add_plant_screen.dart';
 import 'edit_plant_screen.dart';
+import 'product_detail_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.green,
-        scaffoldBackgroundColor: Colors.white, // Set background to white
+        scaffoldBackgroundColor: Colors.white,
       ),
       home: HomeScreen(),
     );
@@ -47,9 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('🌿Greenery World',style: TextStyle(color: Colors.white),),
+        title: Text('🌿Greenery World', style: TextStyle(color: Colors.white)),
         centerTitle: true,
-        backgroundColor: Colors.green[900], // Dark green AppBar
+        backgroundColor: Colors.green[900],
       ),
       body: FutureBuilder<List<Plant>>(
         future: plants,
@@ -66,7 +67,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   child: ListTile(
                     contentPadding: const EdgeInsets.all(8),
-                    leading: Image.network(plant.imageUrl, width: 60, height: 60, fit: BoxFit.cover),
+                    leading: Image.network(
+                      plant.imageUrl,
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.cover,
+                    ),
                     title: Text(plant.commonName, style: TextStyle(fontWeight: FontWeight.bold)),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,6 +84,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     isThreeLine: true,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ProductDetailScreen(plant: plant),
+                        ),
+                      );
+                    },
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
